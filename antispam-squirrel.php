@@ -1,30 +1,38 @@
- <?php
+<?php
 /**
  * @package antispam-squirrel
  * @Version 1.0
  */
 /*
-plugin name: Antispam Squirrel
+Plugin Name: Antispam Squirrel
 Description: This plugin is used to avoid spam comments.
 Author: Mia Jiao
-Version: 1.0
+Version: 1.1
 Author Uri: http://mia.blog.coolder.com
+Text Domain: antispam-squirrel
+Domain Path: /languages
 */
 
 defined('ABSPATH') OR exit; // prevent full path disclosure
 
 $antispam_squirrel_error_message = "You are a robot!";
 
+function antispam_squirrel_load_plugin_textdomain() {
+    load_plugin_textdomain( 'antispam-squirrel', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+}
+add_action( 'plugins_loaded', 'antispam_squirrel_load_plugin_textdomain' );
+
 function antispam_squirrel() {
     ?>
     <p class="antispam-squirrel">
-        <label for="Antispam Squirrel"><?php _e('Please copy the word "SQUIRREL" in the space below') ?></label>
+        <label for="Antispam Squirrel"><?php _e('Please copy the word "SQUIRREL" in the space below', 'antispam-squirrel'); ?></label>
         <input type="text" name="antispam_squirrel" id="antispam_squirrel" />
     </p>
     <?php
 }
 // Now we set that function up to execute when the comment_form action is called
 add_action( 'comment_form', 'antispam_squirrel');
+add_action( 'register_form', 'antispam_squirrel');
 //add_action( 'comment_form_after_fields', 'antispam_squirrel');
 //add_action( 'comment_form_logged_in_after', 'antispam_squirrel');
 
